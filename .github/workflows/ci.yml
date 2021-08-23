@@ -11,7 +11,7 @@ on:
   pull_request:
 
 env:
-  docker_repository: docker.synapse.org/syn25992884/bert-phi-annotator
+  docker_repository: docker.synapse.org/syn22277123/phi-annotator-huggingface-bert
 
 jobs:
   configure:

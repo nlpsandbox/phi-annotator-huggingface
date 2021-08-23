@@ -62,9 +62,9 @@ Person Name | [TextPersonNameAnnotation](https://github.com/nlpsandbox/nlpsandbo
 
 ## Specification
 
+- NLP Sandbox tool version: x.y.z
 - NLP Sandbox schemas version: 1.2.0
-- NLP Sandbox tool version: 1.2.1
-- Docker image: [docker.synapse.org/syn22277123/phi-annotator-example]
+- Docker image: [docker.synapse.org/XXX/phi-annotator-huggingface-bert]
 
 
 ## Requirements
@@ -99,13 +99,13 @@ curl -O https://huggingface.co/dslim/bert-base-NER/blob/main/config.json \
     && curl -O https://huggingface.co/dslim/bert-base-NER/blob/main/pytorch_model.bin \
     && curl -O https://huggingface.co/dslim/bert-base-NER/blob/main/special_tokens_map.json \
     && curl -O https://huggingface.co/dslim/bert-base-NER/blob/main/tokenizer_config.json \
-    && curl -O https://huggingface.co/dslim/bert-base-NER/blob/main/vocab.txt 
+    && curl -O https://huggingface.co/dslim/bert-base-NER/blob/main/vocab.txt
 
     && mv config.json dslim-bert/model \
     && mv pytorch_model.bin dslim-bert/model \
     && mv special_tokens_map.json dslim-bert/tokenizer \
     && mv tokenizer_config.json dslim-bert/tokenizer \
-    && mv vocab.txt dslim-bert/tokenizer 
+    && mv vocab.txt dslim-bert/tokenizer
 
 ```
 
