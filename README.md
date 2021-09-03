@@ -86,33 +86,25 @@ You can stop the container run with `Ctrl+C`, followed by `docker compose down`.
 
 ### Running with Python
 
-Create a Conda environment.
+Create a Conda environment:
 
 ```console
 conda create --name phi-annotator python=3.9 -y
 conda activate phi-annotator
 ```
 
-Download the dslim-bert model (too large to be tracked on GitHub).
-```
-curl -O https://huggingface.co/dslim/bert-base-NER/blob/main/config.json \
-    && curl -O https://huggingface.co/dslim/bert-base-NER/blob/main/pytorch_model.bin \
-    && curl -O https://huggingface.co/dslim/bert-base-NER/blob/main/special_tokens_map.json \
-    && curl -O https://huggingface.co/dslim/bert-base-NER/blob/main/tokenizer_config.json \
-    && curl -O https://huggingface.co/dslim/bert-base-NER/blob/main/vocab.txt 
-
-    && mv config.json dslim-bert/model \
-    && mv pytorch_model.bin dslim-bert/model \
-    && mv special_tokens_map.json dslim-bert/tokenizer \
-    && mv tokenizer_config.json dslim-bert/tokenizer \
-    && mv vocab.txt dslim-bert/tokenizer 
-
-```
-
-Install and start this NLP Sandbox PHI annotator.
+Install dependencies and download David S. Lim's pretrained BERT neural NER model (which is too large to be tracked on
+this GitHub repo):
 
 ```console
-cd server && pip install -r requirements.txt
+cd server 
+pip install -r requirements.txt
+python save_bert.py
+```
+
+Run the PHI annotator server:
+
+```
 python -m openapi_server
 ```
 
