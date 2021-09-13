@@ -92,7 +92,6 @@ class SlidingWindowNERPipeline(TokenClassificationPipeline):
                                 0, tokens['input_ids'].shape[1] - 1,
                                 self.stride):
                             end = start + self.window_length
-                            print(f"Window length: {self.window_length}")
                             window_logits = self.model(
                                 **{attr: value[:, start:end] for attr, value in
                                    tokens.items()}
@@ -101,13 +100,6 @@ class SlidingWindowNERPipeline(TokenClassificationPipeline):
                         # Old way for getting logits under PyTorch
                         # entities = self.model(**tokens)[0][0].cpu().numpy()
                         input_ids = tokens["input_ids"].cpu().numpy()[0]
-                        print("Logits:")
-                        print(entities)
-                        print(entities.shape)
-                        print("Top scores:")
-                        print(np.argmax(entities, -1))
-                        print("Top scores shape:")
-                        print(entities.shape)
 
             scores = np.exp(entities) / np.exp(entities).sum(-1, keepdims=True)
             pre_entities = self.gather_pre_entities(sentence, input_ids, scores,
