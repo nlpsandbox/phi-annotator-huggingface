@@ -6,11 +6,13 @@ from transformers import AutoTokenizer as at, \
     AutoModelForTokenClassification as amc, TokenClassificationPipeline
 from transformers.pipelines import AggregationStrategy
 
+
 class SlidingWindowNERPipeline(TokenClassificationPipeline):
     """Modified version of TokenClassificationPipeline that uses a sliding
     window approach to fit long texts into the limited position embeddings of a
     transformer.
     """
+
     def __init__(self, window_length: Optional[int] = None,
                  stride: Optional[int] = None, *args, **kwargs):
         super(SlidingWindowNERPipeline, self).__init__(
@@ -70,14 +72,15 @@ class SlidingWindowNERPipeline(TokenClassificationPipeline):
                     return_offsets_mapping=self.tokenizer.is_fast
                 )
                 if self.tokenizer.is_fast:
-                    offset_mapping = tokens.pop("offset_mapping").cpu().numpy()[0]
+                    offset_mapping = \
+                        tokens.pop("offset_mapping").cpu().numpy()[0]
                 elif offset_mappings:
                     offset_mapping = offset_mappings[i]
                 else:
                     offset_mapping = None
 
                 special_tokens_mask = \
-                tokens.pop("special_tokens_mask").cpu().numpy()[0]
+                    tokens.pop("special_tokens_mask").cpu().numpy()[0]
 
                 if self.framework == "tf":
                     raise ValueError("SlidingWindowNERPipeline does not "
@@ -117,7 +120,8 @@ class SlidingWindowNERPipeline(TokenClassificationPipeline):
                         entity
                         for entity in grouped_entities
                         if entity.get("entity", None) not in self.ignore_labels
-                           and entity.get("entity_group", None) not in self.ignore_labels
+                        and entity.get("entity_group", None) not in
+                        self.ignore_labels
                     ]
                     answers.append(entities)
 
