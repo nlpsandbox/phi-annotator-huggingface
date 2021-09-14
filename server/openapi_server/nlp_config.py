@@ -8,6 +8,10 @@ from transformers.pipelines import AggregationStrategy
 
 
 class SlidingWindowNERPipeline(TokenClassificationPipeline):
+    """Modified version of TokenClassificationPipeline that uses a sliding
+    window approach to fit long texts into the limited position embeddings of a
+    transformer.
+    """
     def __init__(self, window_length: Optional[int] = None,
                  stride: Optional[int] = None, *args, **kwargs):
         super(SlidingWindowNERPipeline, self).__init__(
