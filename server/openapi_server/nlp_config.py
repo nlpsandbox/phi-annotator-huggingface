@@ -129,8 +129,8 @@ class SlidingWindowNERPipeline(TokenClassificationPipeline):
 
 class Bert:
     def __init__(self):
-        self.tokenizer = at.from_pretrained("dslim-tokenizer")
-        self.model = amc.from_pretrained("dslim-model")
+        self.tokenizer = at.from_pretrained("hf")
+        self.model = amc.from_pretrained("hf")
         self.nlp = SlidingWindowNERPipeline(model=self.model,
                                             tokenizer=self.tokenizer)
 

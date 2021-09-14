@@ -1,8 +1,12 @@
+import os
 from transformers import AutoModelForTokenClassification as amc, AutoTokenizer as at
 
 
-tokenizer = at.from_pretrained('dslim/bert-base-NER')
-tokenizer.save_pretrained('dslim-tokenizer')
+MODEL_NAME = os.getenv('HUGGINGFACE_MODEL', 'dslim/bert-base-NER')
+LOCAL_DIRECTORY = 'hf'
 
-model = amc.from_pretrained('dslim/bert-base-NER')
-model.save_pretrained('dslim-model')
+tokenizer = at.from_pretrained(MODEL_NAME)
+tokenizer.save_pretrained(LOCAL_DIRECTORY)
+
+model = amc.from_pretrained(MODEL_NAME)
+model.save_pretrained(LOCAL_DIRECTORY)
