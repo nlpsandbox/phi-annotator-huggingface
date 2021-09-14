@@ -27,8 +27,8 @@ COPY save_model.py ./
 RUN pip install --no-cache-dir \
     -r requirements.txt -r prod-requirements.txt \
     && useradd --create-home --shell /bin/bash nlp
-# Download BERT model:
-RUN python save_bert.py
+# Download model from HuggingFace:
+RUN python save_model.py
 
 
 WORKDIR /
