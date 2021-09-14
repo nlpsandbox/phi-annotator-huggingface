@@ -22,6 +22,7 @@ COPY openapi_server openapi_server/
 COPY requirements.txt prod-requirements.txt uwsgi.ini ./
 COPY save_model.py ./
 
+
 #install requirements
 RUN pip install --no-cache-dir \
     -r requirements.txt -r prod-requirements.txt \
