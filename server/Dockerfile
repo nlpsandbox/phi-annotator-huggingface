@@ -20,7 +20,7 @@ RUN apt-get update -qq -y \
 WORKDIR ${APP_DIR}
 COPY openapi_server openapi_server/
 COPY requirements.txt prod-requirements.txt uwsgi.ini ./
-COPY save_bert.py ./
+COPY save_model.py ./
 
 #install requirements
 RUN pip install --no-cache-dir \
