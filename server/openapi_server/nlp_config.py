@@ -76,45 +76,47 @@ class SlidingWindowNERPipeline(TokenClassificationPipeline):
                 special_tokens_mask = \
                 tokens.pop("special_tokens_mask").cpu().numpy()[0]
 
-                # Forward
                 if self.framework == "tf":
                     raise ValueError("SlidingWindowNERPipeline does not "
                                      "support TensorFlow models.")
-                else:
-                    with torch.no_grad():
-                        tokens = self.ensure_tensor_on_device(**tokens)
+                # Forward inference pass
+                with torch.no_grad():
+                    tokens = self.ensure_tensor_on_device(**tokens)
 
+                    # Get logits (i.e. tag scores)
+                    entities = np.zeros(tokens['input_ids'].shape[1:] +
+                                        (num_labels,))
+                    writes = np.zeros(entities.shape)
+                    for start in range(
+                            0, tokens['input_ids'].shape[1] - 1,
+                            self.stride):
+                        end = start + self.window_length
+                        window_logits = self.model(
+                            **{attr: value[:, start:end] for attr, value in
+                               tokens.items()}
+                        )[0][0].cpu().numpy()
+                        entities[start:end] += window_logits
+                        writes[start:end] += 1
+                    # Old way for getting logits under PyTorch
+                    # entities = self.model(**tokens)[0][0].cpu().numpy()
+                    input_ids = tokens["input_ids"].cpu().numpy()[0]
+                    entities = entities / writes
 
-                        # New way for getting logits under PyTorch
-                        entities = np.zeros(tokens['input_ids'].shape[1:] +
-                                            (num_labels,))
-                        for start in range(
-                                0, tokens['input_ids'].shape[1] - 1,
-                                self.stride):
-                            end = start + self.window_length
-                            window_logits = self.model(
-                                **{attr: value[:, start:end] for attr, value in
-                                   tokens.items()}
-                            )[0][0].cpu().numpy()
-                            entities[start:end] += window_logits
-                        # Old way for getting logits under PyTorch
-                        # entities = self.model(**tokens)[0][0].cpu().numpy()
-                        input_ids = tokens["input_ids"].cpu().numpy()[0]
-
-            scores = np.exp(entities) / np.exp(entities).sum(-1, keepdims=True)
-            pre_entities = self.gather_pre_entities(sentence, input_ids, scores,
-                                                    offset_mapping,
-                                                    special_tokens_mask)
-            grouped_entities = self.aggregate(pre_entities,
-                                              self.aggregation_strategy)
-            # Filter anything that is in self.ignore_labels
-            entities = [
-                entity
-                for entity in grouped_entities
-                if entity.get("entity", None) not in self.ignore_labels
-                   and entity.get("entity_group", None) not in self.ignore_labels
-            ]
-            answers.append(entities)
+                    scores = np.exp(entities) / np.exp(entities).sum(
+                        -1, keepdims=True)
+                    pre_entities = self.gather_pre_entities(
+                        sentence, input_ids, scores, offset_mapping,
+                        special_tokens_mask)
+                    grouped_entities = self.aggregate(
+                        pre_entities, self.aggregation_strategy)
+                    # Filter anything that is in self.ignore_labels
+                    entities = [
+                        entity
+                        for entity in grouped_entities
+                        if entity.get("entity", None) not in self.ignore_labels
+                           and entity.get("entity_group", None) not in self.ignore_labels
+                    ]
+                    answers.append(entities)
 
         if len(answers) == 1:
             return answers[0]
