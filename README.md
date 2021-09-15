@@ -64,7 +64,7 @@ Person Name | [TextPersonNameAnnotation](https://github.com/nlpsandbox/nlpsandbo
 
 - NLP Sandbox schemas version: 1.2.0
 - NLP Sandbox tool version: 1.2.1
-- Docker image: [docker.synapse.org/syn22277123/phi-annotator-example]
+- Docker image: [docker.synapse.org/syn22277123/phi-annotator-huggingface-XXX]
 
 
 ## Requirements
@@ -97,7 +97,7 @@ Install dependencies and download David S. Lim's pretrained BERT neural NER mode
 this GitHub repo):
 
 ```console
-cd server 
+cd server
 pip install -r requirements.txt
 python save_bert.py
 ```
