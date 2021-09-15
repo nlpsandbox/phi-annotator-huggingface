@@ -82,7 +82,6 @@ conda create --name phi-annotator python=3.9 -y
 conda activate phi-annotator
 ```
 
-
 Install dependencies and download an NER model from HuggingFace (default: David
 S. Lim's fine-tuned BERT model):
 
