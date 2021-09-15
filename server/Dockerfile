@@ -20,14 +20,15 @@ RUN apt-get update -qq -y \
 WORKDIR ${APP_DIR}
 COPY openapi_server openapi_server/
 COPY requirements.txt prod-requirements.txt uwsgi.ini ./
-COPY save_bert.py ./
+COPY save_model.py ./
+
 
 #install requirements
 RUN pip install --no-cache-dir \
     -r requirements.txt -r prod-requirements.txt \
     && useradd --create-home --shell /bin/bash nlp
-# Download BERT model:
-RUN python save_bert.py
+# Download model from HuggingFace:
+RUN python save_model.py
 
 
 WORKDIR /
