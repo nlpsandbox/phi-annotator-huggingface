@@ -88,12 +88,7 @@ model (which is too large to be tracked on this GitHub repo):
 Install and start this NLP Sandbox tool.
 
 ```console
-<<<<<<< HEAD
-cd server
-pip install -r requirements.txt
-=======
 cd server && pip install -r requirements.txt
->>>>>>> 65fb5e2ff66e9e2643b3883e8dd600cac99751cc
 python save_bert.py
 python -m openapi_server
 ```
