@@ -2,10 +2,9 @@ version: "3.8"
 
 services:
   phi-annotator:
-    image: docker.synapse.org/syn25992884/bert-phi-annotator
+    image: docker.synapse.org/syn22277123/phi-annotator-huggingface
     build:
       context: server
-      dockerfile: Dockerfile
     container_name: phi-annotator
     networks:
       - nlpsandbox-internal

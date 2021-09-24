@@ -52,7 +52,8 @@ Person Name | [TextPersonNameAnnotation] | Yes
 
 - This NLP Sandbox tool version: TBA
 - NLP Sandbox schemas version: 1.2.0
-- Docker image: [docker.synapse.org/syn22277123/phi-annotator-huggingface-bert]
+- NLP Sandbox tool version: 1.2.1
+- Docker image: [docker.synapse.org/syn22277123/phi-annotator-huggingface-XXX]
 
 
 ## Requirements
@@ -80,7 +81,6 @@ Create a Conda environment:
 conda create --name phi-annotator python=3.9 -y
 conda activate phi-annotator
 ```
-
 
 Install dependencies and download an NER model from HuggingFace (default: David
 S. Lim's fine-tuned BERT model):
