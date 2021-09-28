@@ -107,6 +107,12 @@ jobs:
   docker:
     needs: [test]
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        model-name:
+          - "dslim/bert-base-NER"
+          - "dslim/bert-base-NER-uncased"
+          - "dslim/bert-large-NER"
     steps:
     - uses: actions/checkout@v2
 
@@ -142,6 +148,8 @@ jobs:
         platforms: linux/amd64
         push: ${{ env.push }}
         tags: ${{ env.tags }}
+        env:
+          HUGGGINGFACE_MODEL: ${{ matrix.model-name }}
         labels: |
           org.opencontainers.image.created=${{ env.created }}
           org.opencontainers.image.source=${{ github.repositoryUrl }}
