@@ -130,7 +130,7 @@ class SlidingWindowNERPipeline(TokenClassificationPipeline):
         return answers
 
 
-class Bert:
+class Annotator:
     def __init__(self):
         self.tokenizer = at.from_pretrained("hf")
         self.model = amc.from_pretrained("hf")
@@ -143,4 +143,4 @@ class Bert:
         return ner_results
 
 
-bert = Bert()
+annotator = Annotator()

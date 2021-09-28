@@ -3,7 +3,7 @@ from openapi_server.models.error import Error  # noqa: E501
 from openapi_server.models.text_location_annotation import TextLocationAnnotation  # noqa: E501
 from openapi_server.models.text_location_annotation_request import TextLocationAnnotationRequest  # noqa: E501
 from openapi_server.models.text_location_annotation_response import TextLocationAnnotationResponse  # noqa: E501
-from openapi_server.nlp_config import bert
+from openapi_server.nlp_config import annotator
 
 
 def create_text_location_annotations():  # noqa: E501
@@ -23,7 +23,7 @@ def create_text_location_annotations():  # noqa: E501
             annotation_request = TextLocationAnnotationRequest.from_dict(connexion.request.get_json())  # noqa: E501
             note = annotation_request._note
             annotations = []
-            location_annotations = bert.get_entities(note.text, 'LOC')
+            location_annotations = annotator.get_entities(note.text, 'LOC')
             add_location_annotation(annotations, location_annotations)
             res = TextLocationAnnotationResponse(annotations)
             status = 200

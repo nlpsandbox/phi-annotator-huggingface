@@ -3,7 +3,7 @@ from openapi_server.models.error import Error  # noqa: E501
 from openapi_server.models.text_person_name_annotation import TextPersonNameAnnotation
 from openapi_server.models.text_person_name_annotation_request import TextPersonNameAnnotationRequest  # noqa: E501
 from openapi_server.models.text_person_name_annotation_response import TextPersonNameAnnotationResponse  # noqa: E501
-from openapi_server.nlp_config import bert
+from openapi_server.nlp_config import annotator
 
 
 def create_text_person_name_annotations():  # noqa: E501
@@ -20,7 +20,7 @@ def create_text_person_name_annotations():  # noqa: E501
             annotation_request = TextPersonNameAnnotationRequest.from_dict(connexion.request.get_json())  # noqa: E501
             note = annotation_request._note  # noqa: E501
             annotations = []
-            name_annotations = bert.get_entities(note.text, "PER")
+            name_annotations = annotator.get_entities(note.text, "PER")
             add_name_annotation(annotations, name_annotations)
             res = TextPersonNameAnnotationResponse(annotations)
             status = 200
