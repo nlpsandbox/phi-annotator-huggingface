@@ -142,5 +142,8 @@ class Bert:
         ner_results = [r for r in ner_results if label in r['entity_group']]
         return ner_results
 
+    def get_name(self):
+        return self.model.name_or_path
+
 
 bert = Bert()
