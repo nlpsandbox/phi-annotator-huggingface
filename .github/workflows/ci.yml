@@ -11,7 +11,7 @@ on:
   pull_request:
 
 env:
-  docker_repository: docker.synapse.org/syn22277123/phi-annotator-huggingface
+  docker_repository_base: docker.synapse.org/syn22277123/phi-annotator-huggingface
 
 jobs:
   configure:
@@ -125,6 +125,13 @@ jobs:
     - name: Restore $GITHUB_ENV
       run: cat .github_env >> $GITHUB_ENV
 
+    - name: Generate complete Docker image tags
+      run: |
+        IMAGE=${{ env.docker_repository_base }}-${{ matrix.model-name }}
+        TAGS=${{ env.tags }}
+        NEW_TAGS="$(echo $TAGS | tr "," "\n" | awk -v image="$IMAGE" '{print image ":" $1}' | paste -sd "," -)"
+        echo tags=$NEW_TAGS >> $GITHUB_ENV
+
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
 
@@ -148,8 +155,8 @@ jobs:
         platforms: linux/amd64
         push: ${{ env.push }}
         tags: ${{ env.tags }}
-        env:
-          HUGGGINGFACE_MODEL: ${{ matrix.model-name }}
+        build-args: |
+          HUGGINGFACE_MODEL=${{ matrix.model-name }}
         labels: |
           org.opencontainers.image.created=${{ env.created }}
           org.opencontainers.image.source=${{ github.repositoryUrl }}
