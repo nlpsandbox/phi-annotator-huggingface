@@ -110,9 +110,9 @@ jobs:
     strategy:
       matrix:
         model-name:
-          - "bert-base-NER"
-          - "bert-base-NER-uncased"
-          - "bert-large-NER"
+          - bert-base-NER
+          - bert-base-NER-uncased
+          - bert-large-NER
     steps:
     - uses: actions/checkout@v2
 
@@ -156,7 +156,7 @@ jobs:
         push: ${{ env.push }}
         tags: ${{ env.tags }}
         build-args: |
-          HUGGINGFACE_MODEL="dslim/${{ matrix.model-name }}"
+          HUGGINGFACE_MODEL=dslim/${{ matrix.model-name }}
         labels: |
           org.opencontainers.image.created=${{ env.created }}
           org.opencontainers.image.source=${{ github.repositoryUrl }}
