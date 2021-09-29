@@ -6,7 +6,7 @@ services:
     build:
       context: server
       args:
-        HUGGINGFACE_MODEL: "dslim/bert-large-NER"
+        HUGGINGFACE_MODEL: "dslim/bert-base-NER"
     container_name: phi-annotator
     networks:
       - nlpsandbox-internal
