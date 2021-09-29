@@ -2,7 +2,7 @@ import os
 from transformers import AutoModelForTokenClassification as amc, AutoTokenizer as at
 
 
-MODEL_NAME = os.getenv('HUGGINGFACE_MODEL')
+MODEL_NAME = os.getenv('HUGGINGFACE_MODEL', 'dslim/bert-base-NER')
 LOCAL_DIRECTORY = 'hf'
 
 # Save tokenizer
