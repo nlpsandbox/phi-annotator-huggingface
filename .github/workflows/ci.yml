@@ -129,7 +129,7 @@ jobs:
       run: |
         IMAGE=${{ env.docker_repository_base }}-${{ matrix.model-name }}
         TAGS=${{ env.tags }}
-        NEW_TAGS="$(echo $TAGS | tr "," "\n" | awk -v image="$IMAGE" '{print image ":" $1}' | paste -sd "," -)"
+        NEW_TAGS="$(echo $TAGS | tr "," "\n" ":" | awk -v image="$IMAGE" '{print image ":" $1}' | paste -sd "," -)"
         echo tags=$NEW_TAGS >> $GITHUB_ENV
 
     - name: Set up QEMU
