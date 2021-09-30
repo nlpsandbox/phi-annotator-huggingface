@@ -134,6 +134,8 @@ class Bert:
     def __init__(self):
         self.tokenizer = at.from_pretrained("hf")
         self.model = amc.from_pretrained("hf")
+        with open('hf/name.txt') as name_file:
+            self.name = name_file.read()
         self.nlp = SlidingWindowNERPipeline(model=self.model,
                                             tokenizer=self.tokenizer)
 
@@ -141,6 +143,9 @@ class Bert:
         ner_results = self.nlp(sample_text)
         ner_results = [r for r in ner_results if label in r['entity_group']]
         return ner_results
+
+    def get_name(self):
+        return self.name
 
 
 bert = Bert()

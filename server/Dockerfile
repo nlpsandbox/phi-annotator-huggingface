@@ -1,4 +1,5 @@
 FROM python:3.9.6-slim-buster
+ARG HUGGINGFACE_MODEL="dslim/bert-base-NER"
 
 ENV APP_DIR=/opt/app
 
@@ -18,17 +19,20 @@ RUN apt-get update -qq -y \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR ${APP_DIR}
-COPY openapi_server openapi_server/
+
+# Install requirements
 COPY requirements.txt prod-requirements.txt uwsgi.ini ./
-COPY save_model.py ./
-
-
-#install requirements
 RUN pip install --no-cache-dir \
     -r requirements.txt -r prod-requirements.txt \
     && useradd --create-home --shell /bin/bash nlp
+
 # Download model from HuggingFace:
+ENV HUGGINGFACE_MODEL=${HUGGINGFACE_MODEL}
+COPY save_model.py ./
 RUN python save_model.py
+
+# Copy source code
+COPY openapi_server openapi_server/
 
 
 WORKDIR /
