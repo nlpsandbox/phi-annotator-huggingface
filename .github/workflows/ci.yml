@@ -1,8 +1,6 @@
 name: CI
 
 on:
-  schedule:
-    - cron: '0 10 * * *' # everyday at 10am
   push:
     branches:
       - main
@@ -11,7 +9,7 @@ on:
   pull_request:
 
 env:
-  docker_repository_base: docker.synapse.org/syn22277123/phi-annotator-huggingface
+  docker_repository_base: docker.synapse.org/syn22277124/phi-annotator-spark-nlp
 
 jobs:
   configure:
@@ -98,10 +96,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install tox tox-gh-actions
 
-    - name: Test with tox
-      run: |
-        cd server
-        tox
+    # - name: Test with tox
+    #   run: |
+    #     cd server
+    #     tox
 
   docker:
     needs: [test]
@@ -109,9 +107,9 @@ jobs:
     strategy:
       matrix:
         config-name:
-          - bert-base-ner
-          - bert-base-ner-uncased
-          - bert-large-ner
+          - "ner-deid-large"
+          - "ner-deid-synthetic"
+          # - "ner-deidentify-dl"
     steps:
     - uses: actions/checkout@v2
 
@@ -131,7 +129,7 @@ jobs:
       run: |
         IMAGE=${{ env.docker_repository_base }}-${{ matrix.config-name }}
         TAGS=${{ env.tags }}
-        NEW_TAGS="$(echo $TAGS | tr "," "\n" ":" | awk -v image="$IMAGE" '{print image ":" $1}' | paste -sd "," -)"
+        NEW_TAGS="$(echo $TAGS | tr "," "\n" | awk -v image="$IMAGE" '{print image ":" $1}' | paste -sd "," -)"
         echo tags=$NEW_TAGS >> $GITHUB_ENV
 
     - name: Set up QEMU
@@ -155,10 +153,16 @@ jobs:
         context: server
         file: server/Dockerfile
         platforms: linux/amd64
+        build-args: |
+          CONFIG_NAME=${{ env.CONFIG_NAME }}
+          SPARK_NLP_LICENSE=${{ secrets.SPARK_NLP_LICENSE }}
+          SPARK_AWS_ACCESS_KEY_ID=${{ secrets.SPARK_AWS_ACCESS_KEY_ID }}
+          SPARK_AWS_SECRET_ACCESS_KEY=${{ secrets.SPARK_AWS_SECRET_ACCESS_KEY }}
+          SPARK_JSL_VERSION=${{ env.SPARK_JSL_VERSION }}
+          NER_MODEL=${{ env.NER_MODEL }}
+          EMBEDDINGS_MODEL=${{ env.EMBEDDINGS_MODEL }}
         push: ${{ env.push }}
         tags: ${{ env.tags }}
-        build-args: |
-          HUGGINGFACE_MODEL=${{ env.MODEL_NAME }}
         labels: |
           org.opencontainers.image.created=${{ env.created }}
           org.opencontainers.image.source=${{ github.repositoryUrl }}
