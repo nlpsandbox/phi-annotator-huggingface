@@ -130,7 +130,7 @@ class SlidingWindowNERPipeline(TokenClassificationPipeline):
         return answers
 
 
-class Bert:
+class HuggingFace:
     def __init__(self):
         self.tokenizer = at.from_pretrained("hf")
         self.model = amc.from_pretrained("hf")
@@ -148,4 +148,4 @@ class Bert:
         return self.name
 
 
-bert = Bert()
+huggingFace = HuggingFace()

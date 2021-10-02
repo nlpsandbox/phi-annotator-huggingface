@@ -2,7 +2,7 @@ from openapi_server.models.tool import Tool  # noqa: E501
 from openapi_server.models.tool_dependencies import ToolDependencies  # noqa: E501
 from openapi_server.models.tool_type import ToolType  # noqa: E501
 from openapi_server.models.license import License
-from openapi_server.nlp_config import bert
+from openapi_server.config import config
 
 
 def get_tool():  # noqa: E501
@@ -14,15 +14,14 @@ def get_tool():  # noqa: E501
     :rtype: Tool
     """
     tool = Tool(
-        name="phi-annotator-example",
-        version="1.2.1",
+        name=f"phi-annotator-huggingface-{config.config_name}",
+        version="1.0.0",
         license=License.APACHE_2_0,
-        repository="github:nlpsandbox/phi-annotator-example",
-        description="Implementation of the NLP Sandbox PHI Annotator using "
-                    "HuggingFace Model: '%s'" % (bert.get_name()),
+        repository="github:nlpsandbox/phi-annotator-huggingface",
+        description="Hugging Face PHI annotator ({config.model_name})",
         author="NLP Sandbox Team",
         author_email="team@nlpsandbox.io",
-        url="https://github.com/nlpsandbox/phi-annotator-example",
+        url="https://github.com/nlpsandbox/phi-annotator-huggingface",
         type=ToolType.PHI_ANNOTATOR,
         api_version="1.2.0"
     )
