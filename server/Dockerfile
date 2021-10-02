@@ -35,7 +35,6 @@ RUN python save_model.py
 # Copy source code
 COPY openapi_server openapi_server/
 
-
 WORKDIR /
 COPY docker-entrypoint.sh .
 RUN chmod +x docker-entrypoint.sh
