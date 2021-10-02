@@ -129,7 +129,7 @@ jobs:
 
     - name: Generate complete Docker image tags
       run: |
-        IMAGE=${{ env.docker_repository_base }}-${{ matrix.model-name }}
+        IMAGE=${{ env.docker_repository_base }}-${{ matrix.config-name }}
         TAGS=${{ env.tags }}
         NEW_TAGS="$(echo $TAGS | tr "," "\n" | awk -v image="$IMAGE" '{print image ":" $1}' | paste -sd "," -)"
         echo tags=$NEW_TAGS >> $GITHUB_ENV
