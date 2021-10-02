@@ -1,5 +1,6 @@
 FROM python:3.9.6-slim-buster
-ARG HUGGINGFACE_MODEL="dslim/bert-base-NER"
+
+ARG MODEL_NAME="dslim/bert-base-NER"
 
 ENV APP_DIR=/opt/app
 
@@ -27,13 +28,12 @@ RUN pip install --no-cache-dir \
     && useradd --create-home --shell /bin/bash nlp
 
 # Download model from HuggingFace:
-ENV HUGGINGFACE_MODEL=${HUGGINGFACE_MODEL}
+ENV MODEL_NAME=${MODEL_NAME}
 COPY save_model.py ./
 RUN python save_model.py
 
 # Copy source code
 COPY openapi_server openapi_server/
-
 
 WORKDIR /
 COPY docker-entrypoint.sh .
