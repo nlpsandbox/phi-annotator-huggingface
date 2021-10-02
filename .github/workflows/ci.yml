@@ -108,7 +108,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        model-name:
+        config-name:
           - bert-base-ner
           - bert-base-ner-uncased
           - bert-large-ner
@@ -158,7 +158,7 @@ jobs:
         push: ${{ env.push }}
         tags: ${{ env.tags }}
         build-args: |
-          MODEL_NAME=dslim/${{ matrix.model-name }}
+          MODEL_NAME=dslim/${{ env.MODEL_NAME }}
         labels: |
           org.opencontainers.image.created=${{ env.created }}
           org.opencontainers.image.source=${{ github.repositoryUrl }}
