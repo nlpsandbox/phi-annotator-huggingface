@@ -1,4 +1,5 @@
 FROM python:3.9.6-slim-buster
+
 ARG MODEL_NAME="dslim/bert-base-NER"
 
 ENV APP_DIR=/opt/app
