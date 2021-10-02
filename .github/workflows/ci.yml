@@ -108,10 +108,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        model-name:
-          - bert-base-NER
-          - bert-base-NER-uncased
-          - bert-large-NER
+        config-name:
+          - bert-base-ner
+          - bert-base-ner-uncased
+          - bert-large-ner
     steps:
     - uses: actions/checkout@v2
 
@@ -124,9 +124,12 @@ jobs:
     - name: Restore $GITHUB_ENV
       run: cat .github_env >> $GITHUB_ENV
 
+    - name: Set tool configuration
+      run: cat .env.${{ matrix.config-name }} >> $GITHUB_ENV
+
     - name: Generate complete Docker image tags
       run: |
-        IMAGE=${{ env.docker_repository_base }}-${{ matrix.model-name }}
+        IMAGE=${{ env.docker_repository_base }}-${{ matrix.config-name }}
         TAGS=${{ env.tags }}
         NEW_TAGS="$(echo $TAGS | tr "," "\n" ":" | awk -v image="$IMAGE" '{print image ":" $1}' | paste -sd "," -)"
         echo tags=$NEW_TAGS >> $GITHUB_ENV
@@ -155,7 +158,7 @@ jobs:
         push: ${{ env.push }}
         tags: ${{ env.tags }}
         build-args: |
-          HUGGINGFACE_MODEL=dslim/${{ matrix.model-name }}
+          HUGGINGFACE_MODEL=${{ env.MODEL_NAME }}
         labels: |
           org.opencontainers.image.created=${{ env.created }}
           org.opencontainers.image.source=${{ github.repositoryUrl }}
