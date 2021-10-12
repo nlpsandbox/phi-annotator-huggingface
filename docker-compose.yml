@@ -5,8 +5,9 @@ services:
     image: docker.synapse.org/syn22277123/phi-annotator-huggingface
     build:
       context: server
-      # args:
-        # MODEL_NAME: "dslim/bert-base-NER"
+      args:
+        MODEL_NAME: "dslim/bert-base-NER-uncased"
+        CONFIG_NAME: "bert-base-ner-uncased"
     container_name: phi-annotator
     networks:
       - nlpsandbox-internal
