@@ -1,11 +1,11 @@
 [![nlpsandbox.io](https://nlpsandbox.github.io/nlpsandbox-themes/banner/Banner@3x.png)](https://nlpsandbox.io)
 
-# NLP Sandbox PHI Annotator Example
+# Hugging Face-based NLP Sandbox PHI Annotators
 
-[![GitHub Release](https://img.shields.io/github/release/nlpsandbox/phi-annotator-huggingface-bert.svg?include_prereleases&color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/nlpsandbox/phi-annotator-huggingface-bert/releases)
-[![GitHub CI](https://img.shields.io/github/workflow/status/nlpsandbox/phi-annotator-huggingface-bert/CI.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/nlpsandbox/phi-annotator-huggingface-bert/actions)
-[![GitHub License](https://img.shields.io/github/license/nlpsandbox/phi-annotator-huggingface-bert.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/nlpsandbox/phi-annotator-huggingface-bert/blob/main/LICENSE)
-[![Docker](https://img.shields.io/badge/docker-blue.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=nlpsandbox&logo=data:image/svg%2bxml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJtMy4yIDcuOS0xLjctMXYxMS40bDkuOSA1LjdWMTIuNkw1LjYgOS4zIDMuMiA3Ljl6bTE3LjEtMS4zIDEuNS0uOUwxMiAwIDIuMiA1LjdsMi42IDEuNS4xLjEgMS43IDEgNS41IDMuMiA1LjEtMyAzLjEtMS45ek0xMiA5LjUgOS4zIDcuOSA3LjQgNi44bC0xLjctMS0uMS0uMWgtLjFMMTIgMS45bDYuNSAzLjhMMTYuMyA3IDEyIDkuNXptOC44LTEuNi0yLjQgMS40LS41LjItNS4zIDMuMVYyNGw5LjktNS43VjYuOWwtMS43IDF6IiBmaWxsPSIjZmZmIi8+PC9zdmc+)](https://www.synapse.org/#!Synapse:syn25892628 "Get the Docker image of this tool on NLPSandbox.io")
+[![GitHub Release](https://img.shields.io/github/release/nlpsandbox/phi-annotator-huggingface.svg?include_prereleases&color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/nlpsandbox/phi-annotator-huggingface/releases)
+[![GitHub CI](https://img.shields.io/github/workflow/status/nlpsandbox/phi-annotator-huggingface/CI.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/nlpsandbox/phi-annotator-huggingface/actions)
+[![GitHub License](https://img.shields.io/github/license/nlpsandbox/phi-annotator-huggingface.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/nlpsandbox/phi-annotator-huggingface/blob/main/LICENSE)
+[![Docker](https://img.shields.io/badge/docker-blue.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=nlpsandbox&logo=data:image/svg%2bxml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJtMy4yIDcuOS0xLjctMXYxMS40bDkuOSA1LjdWMTIuNkw1LjYgOS4zIDMuMiA3Ljl6bTE3LjEtMS4zIDEuNS0uOUwxMiAwIDIuMiA1LjdsMi42IDEuNS4xLjEgMS43IDEgNS41IDMuMiA1LjEtMyAzLjEtMS45ek0xMiA5LjUgOS4zIDcuOSA3LjQgNi44bC0xLjctMS0uMS0uMWgtLjFMMTIgMS45bDYuNSAzLjhMMTYuMyA3IDEyIDkuNXptOC44LTEuNi0yLjQgMS40LS41LjItNS4zIDMuMVYyNGw5LjktNS43VjYuOWwtMS43IDF6IiBmaWxsPSIjZmZmIi8+PC9zdmc+)](https://www.synapse.org/#!Synapse:syn22277123/docker/ "Get the Docker image of this tool on NLPSandbox.io")
 [![Leaderboard](https://img.shields.io/badge/leaderboard-blue.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=nlpsandbox&logo=data:image/svg%2bxml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJtMy4yIDcuOS0xLjctMXYxMS40bDkuOSA1LjdWMTIuNkw1LjYgOS4zIDMuMiA3Ljl6bTE3LjEtMS4zIDEuNS0uOUwxMiAwIDIuMiA1LjdsMi42IDEuNS4xLjEgMS43IDEgNS41IDMuMiA1LjEtMyAzLjEtMS45ek0xMiA5LjUgOS4zIDcuOSA3LjQgNi44bC0xLjctMS0uMS0uMWgtLjFMMTIgMS45bDYuNSAzLjhMMTYuMyA3IDEyIDkuNXptOC44LTEuNi0yLjQgMS40LS41LjItNS4zIDMuMVYyNGw5LjktNS43VjYuOWwtMS43IDF6IiBmaWxsPSIjZmZmIi8+PC9zdmc+)](https://www.synapse.org/#!Synapse:syn22277123/wiki/608544 "View the performance of this tool on NLPSandbox.io")
 [![Discord](https://img.shields.io/discord/770484164393828373.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=Discord&logo=discord)](https://nlpsandbox.io/discord "Realtime support / chat with the community and the team")
 
@@ -30,7 +30,6 @@ ID          | [TextIdAnnotation]         | No
 Location    | [TextLocationAnnotation]   | Yes
 Person Name | [TextPersonNameAnnotation] | Yes
 
-
 ## Contents
 
 - [Specification](#Specification)
@@ -50,16 +49,16 @@ Person Name | [TextPersonNameAnnotation] | Yes
 
 ## Specification
 
-- This NLP Sandbox tool version: TBA
 - NLP Sandbox schemas version: 1.2.0
-- NLP Sandbox tool version: 1.2.1
-- Docker image: [docker.synapse.org/syn22277123/phi-annotator-huggingface-XXX]
-
+- Tool version: 1.1.0
+- Tool images:
+  - [docker.synapse.org/syn22277123/phi-annotator-huggingface-bert-base-ner]
+  - [docker.synapse.org/syn22277123/phi-annotator-huggingface-bert-base-ner-uncased]
+  - [docker.synapse.org/syn22277123/phi-annotator-huggingface-bert-large-ner]
 
 ## Requirements
 
 - [Docker Engine] >=19.03.0
-
 
 ## Usage
 
@@ -104,14 +103,12 @@ the tool using Docker (production) or Python (development).
 - Using Docker: http://localhost/ui
 - Using Python: http://localhost:8080/ui
 
-
 ## Development
 
 Please refer to the section `Development` of the [NLP Sandbox PHI Annotator
 example] for information on how to develop an NLP Sandbox PHI annotator in
 Python-Flask and other programming languages-frameworks.
 
-
 ## Versioning
 
 ### GitHub release tags
@@ -136,32 +133,6 @@ tags pushed to the registry.
 You should avoid using a moving tag like `latest` when deploying containers in
 production, because this makes it hard to track which version of the image is
 running and hard to roll back.
-
-## Versioning
-
-### GitHub release tags
-
-This repository uses [semantic versioning] to track the releases of this tool.
-This repository uses "non-moving" GitHub tags, that is, a tag will always point
-to the same git commit once it has been created.
-
-### Docker image tags
-
-The artifact published by the [CI/CD workflow] of this GitHub repository is a
-Docker image pushed to the Synapse Docker Registry. This table lists the image
-tags pushed to the registry.
-
-| Tag name                    | Moving | Description
-|-----------------------------|--------|------------
-| `latest`                    | Yes    | Latest stable release.
-| `edge`                      | Yes    | Latest commit made to the default branch.
-| `edge-<sha>`                | No     | Same as above with the reference to the git commit.
-| `<major>.<minor>.<patch>`   | No     | Stable release.
-
-You should avoid using a moving tag like `latest` when deploying containers in
-production, because this makes it hard to track which version of the image is
-running and hard to roll back.
-
 
 ## Benchmarking on NLPSandbox&#46;io
 
@@ -190,7 +161,7 @@ Thinking about contributing to this project? Get started by reading our
 [Synapse.org]: https://synapse.org
 [openapi-generator]: https://github.com/OpenAPITools/openapi-generator
 [contribution guide]: .github/CONTRIBUTING.md
-[Apache License 2.0]: https://github.com/nlpsandbox/phi-annotator-huggingface-bert/blob/main/LICENSE
+[Apache License 2.0]: https://github.com/nlpsandbox/phi-annotator-huggingface/blob/main/LICENSE
 [Docker Engine]: https://docs.docker.com/engine/install/
 [CI/CD workflow]: .github/workflows/ci.yml
 [semantic versioning]: https://semver.org/
@@ -205,3 +176,6 @@ Thinking about contributing to this project? Get started by reading our
 [TextIdAnnotation]: https://github.com/nlpsandbox/nlpsandbox-schemas/blob/main/openapi/commons/components/schemas/TextIdAnnotation.yaml
 [TextLocationAnnotation]: https://github.com/nlpsandbox/nlpsandbox-schemas/blob/main/openapi/commons/components/schemas/TextLocationAnnotation.yaml
 [TextPersonNameAnnotation]: https://github.com/nlpsandbox/nlpsandbox-schemas/blob/main/openapi/commons/components/schemas/TextPersonNameAnnotation.yaml
+[docker.synapse.org/syn22277123/phi-annotator-huggingface-bert-base-ner]: https://www.synapse.org/#!Synapse:syn26276938
+[docker.synapse.org/syn22277123/phi-annotator-huggingface-bert-base-ner-uncased]: https://www.synapse.org/#!Synapse:syn26276939
+[docker.synapse.org/syn22277123/phi-annotator-huggingface-bert-large-ner]: https://www.synapse.org/#!Synapse:syn26276940

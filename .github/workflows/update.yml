@@ -2,7 +2,7 @@ name: Update to latest NLP Sandbox version
 
 on:
   schedule:
-    - cron: '0 10 * * *'  # everyday at 10am
+    - cron: '0 10 * * THU'  # everyday at 10am
 
 jobs:
   check-and-update:
