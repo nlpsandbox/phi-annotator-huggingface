@@ -18,7 +18,7 @@ def get_tool():  # noqa: E501
         version="1.0.0",
         license=License.APACHE_2_0,
         repository="github:nlpsandbox/phi-annotator-huggingface",
-        description="Hugging Face PHI annotator ({config.model_name})",
+        description=f"Hugging Face PHI annotator ({config.model_name})",
         author="NLP Sandbox Team",
         author_email="team@nlpsandbox.io",
         url="https://github.com/nlpsandbox/phi-annotator-huggingface",

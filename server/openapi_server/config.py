@@ -1,16 +1,10 @@
 import os
-from enum import Enum
+
 
 defaultValues = {
-    "CONFIG_NAME": "",
-    "MODEL_NAME": ""
+    "CONFIG_NAME": "<UNSPECIFIED>",
+    "MODEL_NAME": "<UNSPECIFIED>"
 }
-
-
-class ConfigName(Enum):
-    BERT_BASE_NER = "bert-base-ner"
-    BERT_BASE_NER_UNCASED = "bert-base-ner-uncased"
-    BERT_LARGE_NER = "bert-large-ner"
 
 
 class AbstractConfig(object):
@@ -32,10 +26,9 @@ class AbstractConfig(object):
 
 
 class Config(AbstractConfig):
-    """
-    This class is used to provide coniguration values to the application, first
-    using environment variables and if not found, defaulting to those values
-    provided in the defaultValues dictionary above.
+    """This class is used to provide configuration values to the application,
+    first using environment variables and if not found, defaulting to those
+    values provided in the defaultValues dictionary above.
     """
 
     @property

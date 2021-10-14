@@ -159,6 +159,7 @@ jobs:
         tags: ${{ env.tags }}
         build-args: |
           MODEL_NAME=${{ env.MODEL_NAME }}
+          CONFIG_NAME=${{ env.CONFIG_NAME }}
         labels: |
           org.opencontainers.image.created=${{ env.created }}
           org.opencontainers.image.source=${{ github.repositoryUrl }}
