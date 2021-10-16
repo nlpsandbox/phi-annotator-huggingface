@@ -1,6 +1,10 @@
 FROM python:3.9.6-slim-buster
 
+ARG MODEL_NAME
+ARG CONFIG_NAME
+
 ENV APP_DIR=/opt/app
+ENV CONFIG_NAME=${CONFIG_NAME}
 
 SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
 
@@ -26,12 +30,12 @@ RUN pip install --no-cache-dir \
     && useradd --create-home --shell /bin/bash nlp
 
 # Download model from HuggingFace:
+ENV MODEL_NAME=${MODEL_NAME}
 COPY save_model.py ./
 RUN python save_model.py
 
 # Copy source code
 COPY openapi_server openapi_server/
-
 
 WORKDIR /
 COPY docker-entrypoint.sh .
