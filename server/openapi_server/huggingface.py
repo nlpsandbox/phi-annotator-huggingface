@@ -7,6 +7,11 @@ from transformers import AutoTokenizer as at, \
 from transformers.pipelines import AggregationStrategy
 
 
+# In-Vocab IDs for special tokens ([CLS], [SEP]) used by BERT
+CLS_ID = 101
+SEP_ID = 102
+
+
 class SlidingWindowNERPipeline(TokenClassificationPipeline):
     """Modified version of TokenClassificationPipeline that uses a sliding
     window approach to fit long texts into the limited position embeddings of a
@@ -69,6 +74,7 @@ class SlidingWindowNERPipeline(TokenClassificationPipeline):
                     return_attention_mask=False,
                     return_tensors=self.framework,
                     return_special_tokens_mask=True,
+                    add_special_tokens=False,
                     return_offsets_mapping=self.tokenizer.is_fast
                 )
                 if self.tokenizer.is_fast:
@@ -96,12 +102,15 @@ class SlidingWindowNERPipeline(TokenClassificationPipeline):
                     for start in range(
                             0, tokens['input_ids'].shape[1] - 1,
                             self.stride):
-                        end = start + self.window_length
+                        end = start + self.window_length - 2
+                        window_input_ids = torch.cat([
+                            torch.tensor([[CLS_ID]]),
+                            tokens['input_ids'][:, start:end],
+                            torch.tensor([[SEP_ID]])
+                        ], dim=1)
                         window_logits = self.model(
-                            **{attr: value[:, start:end] for attr, value in
-                               tokens.items()}
-                        )[0][0].cpu().numpy()
-                        entities[start:end] += window_logits
+                            input_ids=window_input_ids)[0][0].cpu().numpy()
+                        entities[start:end] += window_logits[1:-1]
                         writes[start:end] += 1
                     # Old way for getting logits under PyTorch
                     # entities = self.model(**tokens)[0][0].cpu().numpy()
