@@ -15,7 +15,7 @@ def get_tool():  # noqa: E501
     """
     tool = Tool(
         name=f"phi-annotator-huggingface-{config.config_name}",
-        version="1.1.0",
+        version="1.2.0",
         license=License.APACHE_2_0,
         repository="github:nlpsandbox/phi-annotator-huggingface",
         description=f"Hugging Face-based PHI annotator ({config.model_name})",
