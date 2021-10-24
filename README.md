@@ -50,7 +50,7 @@ Person Name | [TextPersonNameAnnotation] | Yes
 ## Specification
 
 - NLP Sandbox schemas version: 1.2.0
-- Tool version: 1.1.0
+- Tool version: 1.2.0
 - Tool images:
   - [docker.synapse.org/syn22277123/phi-annotator-huggingface-bert-base-ner]
   - [docker.synapse.org/syn22277123/phi-annotator-huggingface-bert-base-ner-uncased]
