@@ -88,7 +88,7 @@ Install and start this NLP Sandbox tool.
 
 ```console
 cd server && pip install -r requirements.txt
-python save_bert.py
+python save_model.py
 python -m openapi_server
 ```
 
